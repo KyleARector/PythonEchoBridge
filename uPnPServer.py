@@ -14,10 +14,11 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 msgSend = "HTTP/1.1 200 OK\r\n" + \
           "CACHE-CONTROL: max-age=100\r\n" + \
           "EXT:\r\n" + \
-          "LOCATION: http://" + socket.gethostbyname(socket.gethostname()) + "/description.xml\r\n" + \
-          "SERVER: FreeRTOS/6.0.5, UPnP/1.0, IpBridge/1.10.0\r\n" + \
+          "LOCATION: http://" + "ad.dr.e.ss:8080" + "/static/description.xml\r\n" + \
+          "SERVER: Linux/3.14.0, UPnP/1.0, IpBridge/1.13.0\r\n" + \
+          "hue-bridgeid: 001788FFFE222A8F\r\n" + \
           "ST: urn:schemas-upnp-org:device:basic:1\r\n" + \
-          "USN: uuid:2fa00080-d000-11e1-9b23-001f80007bbe::upnp:rootdevice" 
+          "USN: uuid:2f402f80-da50-11e1-9b23-001788222a8f\r\n\r\n" 
 
 while True:
     msgRecv, addressInfo = sock.recvfrom(10240)
