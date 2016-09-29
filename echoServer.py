@@ -58,7 +58,23 @@ class api_access:
         name = name[:-6]
         id = name.rsplit("/", 1)[-1]
         data = web.data()
-        state = json.loads(data)["on"]
+        bright_adjust = False
+        response = "["
+        try:
+            bright = json.loads(data)["bri"]
+            response += "{\"success\":{\"/lights/" + str(id) + "/state/bri\":" + str(bright) + "}},"
+            bright_adjust = True
+        except:
+            pass
+        try:
+            state = json.loads(data)["on"]
+            response += "{\"success\":{\"/lights/" + str(id) + "/state/on\":" + str(state).lower() + "}}"
+        except:
+            pass
+        response += "]"
+        if bright_adjust:
+            state = int((bright/254.0)*100.0)
+
         db.lpush("sensor_changes", "{\"name\": \"" + db.get("hue_" + str(id)) + "\", \"state\": \"" + str(state) + "\"}")
         response = "[{\"success\":{\"/lights/" + str(id) + "/state/on\":" + str(state).lower() + "}}]"
         return response
