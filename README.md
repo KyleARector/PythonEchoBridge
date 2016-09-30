@@ -8,7 +8,7 @@ Right now, it is configured for our [SmartHome](https://github.com/KyleARector/S
 # Features 
 - Automatic discovery via UPnP
 - API for Echo to control lights
+- Allow variable dimming with Echo
 
 # To Do
 - API refinement
-- Allow variable dimming with Echo
