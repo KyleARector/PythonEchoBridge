@@ -9,10 +9,12 @@ urls = (
     '/api/(.+)', 'api_access'
 )
 
+
 class EchoServer(web.application):
     def run(self, port=8080, *middleware):
         func = self.wsgifunc(*middleware)
         return web.httpserver.runsimple(func, ('0.0.0.0', port))
+
 
 # For complete functionality, need to implement new user
 class new_user:
@@ -20,6 +22,7 @@ class new_user:
         data = web.data()
         response = "{'test': 'hello'}"
         return response
+
 
 class api_access:
     def POST(self, name):
@@ -40,7 +43,7 @@ class api_access:
             sensors = db.lrange("sensors", 0, -1)
             for sensor in sensors:
                 sensor = json.loads(sensor)
-                if sensor["type"] in ["zwave", "wifi"] and sensor["function"] in ["switch", "dimmer"]:
+                if sensor["type"] in ["zwave", "wifi"] and sensor["function"] in ["switch", "dimmer", "curtain"]:
                     web_sensor_lookup[str(sensor_id)] = sensor["name"]
                     db.set("hue_" + str(sensor_id), sensor["name"])
                     sensor_id += 1
@@ -83,4 +86,3 @@ class api_access:
 if __name__ == "__main__":
     app = EchoServer(urls, globals())
     app.run()
-
