@@ -43,7 +43,7 @@ class api_access:
             sensors = db.lrange("sensors", 0, -1)
             for sensor in sensors:
                 sensor = json.loads(sensor)
-                if sensor["type"] in ["zwave", "wifi"] and sensor["function"] in ["switch", "dimmer", "curtain"]:
+                if sensor["type"] in ["zwave", "wifi"] and sensor["function"] in ["switch", "dimmer", "curtain", "screen"]:
                     web_sensor_lookup[str(sensor_id)] = sensor["name"]
                     db.set("hue_" + str(sensor_id), sensor["name"])
                     sensor_id += 1
