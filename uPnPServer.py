@@ -26,10 +26,11 @@ class UPnPServer(UPnPInterface):
         UPnPInterface.__init__(self, address, port)
         # Format a response to broadcast as a Philips Hue Bridge
         # Would be nice to acquire IP from system
+        local_ip = [l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
         self.response = "HTTP/1.1 200 OK\r\n" + \
                         "CACHE-CONTROL: max-age=100\r\n" + \
                         "EXT:\r\n" + \
-                        "LOCATION: http://" + "ad.dr.e.ss:8080" + \
+                        "LOCATION: http://" + local_ip + ":8080" + \
                         "/static/description.xml\r\n" + \
                         "SERVER: Linux/3.14.0, UPnP/1.0, " + \
                         "IpBridge/1.13.0\r\n" + \
